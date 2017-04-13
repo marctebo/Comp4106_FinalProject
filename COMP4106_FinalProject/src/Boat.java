@@ -17,7 +17,6 @@ public class Boat {
 			goalBoat = true;
 		}
 	}
-	
 
 	public ArrayList<Dimension> getArea() {
 		return area;
@@ -132,6 +131,7 @@ public class Boat {
 			}
 		}
 	}
+
 	public static void main(String args[]){
 		Boat b = new Boat(1);
 		b.getArea().add(new Dimension(1,1));

@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class ShipNode {
@@ -9,16 +10,17 @@ public class ShipNode {
 	private ShipNode parent;
 	private ArrayList<Boat> boats;
 	private ArrayList<ShipNode> moves;
-	private Dimension goal;
+	private static Dimension goal;
+
 	
-	public ShipNode(int[][] state,ShipNode parent){
+	public ShipNode(int[][] state,ShipNode parent,Dimension goal){
 		this.state = state;
 		this.parent = parent;
+		this.goal = goal;
 		getBoats();
-		getGoal();
+
 	}
-	
-	
+
 	public ArrayList<Boat> getBoats(){
 		boats = new ArrayList<Boat>();
 		for(int i=0;i<size;i++){
@@ -60,17 +62,22 @@ public class ShipNode {
 		}
 		return null;
 	}
-	
-	public Dimension getGoal(){
-		for(int i=0;i<size;i++){
-			for(int j=0;j<size;j++){
-				if(state[i][j] == -1){
-					goal = new Dimension(i,j);
-				}
-			}
-		}
-		return goal;
+	public int[][] getState() {
+		return state;
 	}
+
+	public void setState(int[][] state) {
+		this.state = state;
+	}
+
+	public ShipNode getParent() {
+		return parent;
+	}
+
+	public void setParent(ShipNode parent) {
+		this.parent = parent;
+	}
+
 	public ArrayList<ShipNode> getMoves(){
 		moves = new ArrayList<ShipNode>();
 		
@@ -84,7 +91,10 @@ public class ShipNode {
 					for(Dimension d: b.getArea()){
 						temp[(int)d.getWidth()][(int)d.getHeight()+j+1] = b.getId();
 					}
-					moves.add(new ShipNode(temp,this));
+					calibrateBoard(temp);
+					if(!hasVisited(temp)){
+						moves.add(new ShipNode(temp,this,goal));
+					}
 				}
 				for(int j=0;j<b.getBackward();j++){	//getting backwards horizontal moves
 					int[][] temp = copyArray(state);
@@ -94,7 +104,10 @@ public class ShipNode {
 					for(Dimension d: b.getArea()){
 						temp[(int)d.getWidth()][(int)d.getHeight()-j-1] = b.getId();
 					}
-					moves.add(new ShipNode(temp,this));
+					calibrateBoard(temp);
+					if(!hasVisited(temp)){
+						moves.add(new ShipNode(temp,this,goal));
+					}
 				}
 			}
 			else{
@@ -106,7 +119,10 @@ public class ShipNode {
 					for(Dimension d: b.getArea()){
 						temp[(int)d.getWidth()-i-1][(int)d.getHeight()] = b.getId();
 					}
-					moves.add(new ShipNode(temp,this));
+					calibrateBoard(temp);
+					if(!hasVisited(temp)){
+						moves.add(new ShipNode(temp,this,goal));
+					}
 				}
 				for(int i=0;i<b.getBackward();i++){	//getting backwards vertical moves
 					int[][] temp = copyArray(state);
@@ -116,12 +132,26 @@ public class ShipNode {
 					for(Dimension d: b.getArea()){
 						temp[(int)d.getWidth()+i+1][(int)d.getHeight()] = b.getId();
 					}
-					moves.add(new ShipNode(temp,this));
+					calibrateBoard(temp);
+					if(!hasVisited(temp)){
+						moves.add(new ShipNode(temp,this,goal));
+					}
 				}
 			}
 		}
 		
 		return moves;
+	}
+	
+	public boolean hasVisited(int[][] arr){
+		ShipNode par = this.parent;
+		while(par!=null){
+			if(Arrays.deepEquals(arr, par.getState())){
+				return true;
+			}
+			par=par.getParent();
+		}
+		return false;
 	}
 	public void printState(){
 		for(int i=0;i<size;i++){
@@ -141,18 +171,22 @@ public class ShipNode {
 		}
 		return temp;
 	}
+	public static void calibrateBoard(int[][] board){
+		if(board[(int)goal.getWidth()][(int)goal.getHeight()]==0){
+			board[(int)goal.getWidth()][(int)goal.getHeight()]=-1;
+		}
+	}
+	public boolean reachedGoal(){
+		for(ShipNode s: getMoves()){
+			if(s.getState()[(int)goal.getWidth()][(int)goal.getHeight()] == 1){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static void main(String args[]){
-		int[][] temp = {{0,0,3,3,0,0},
-						{0,0,2,0,0,0},
-						{1,1,2,0,0,-1},
-						{0,0,0,4,4,0},
-						{0,0,0,0,0,0},
-						{0,0,5,5,0,0}};
-		ShipNode s = new ShipNode(temp,null);
-		Boat b = s.getBoats().get(3);
-		System.out.println(b.getId());
-		b.generateFreeSpace(temp, 6);
-		System.out.println(b.getForward() + "    " + b.getBackward());
-		
+
+
 	}
 }
