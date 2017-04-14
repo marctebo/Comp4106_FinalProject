@@ -12,6 +12,9 @@ public class ShipYard {
 	private int size = 6;
 	private Dimension goal;
 	private ArrayList<ShipNode> visitedNodes;
+	private ShipNode end;
+	private ArrayList<ShipNode> path;
+	public ArrayList<Boat> boatsMoved;
 	
 	public ShipYard(int[][] board){
 		goal = getGoal(board);
@@ -43,6 +46,12 @@ public class ShipYard {
 			}
 			temp = q.remove();
 		}
+		end = temp;
+		setEndPath(end);
+		boatsMoved = new ArrayList<Boat>();
+		for(int i=0;i<path.size()-1;i++){
+			getChangedBoats(path.get(i),path.get(i+1));
+		}
 		return temp;
 	}
 	public ShipNode depthFirstSearch(){
@@ -65,6 +74,12 @@ public class ShipYard {
 			}
 			temp = st.pop();
 		}
+		end = temp;
+		setEndPath(end);
+		boatsMoved = new ArrayList<Boat>();
+		for(int i=0;i<path.size()-1;i++){
+			getChangedBoats(path.get(i),path.get(i+1));
+		}
 		return temp;
 	}
 	public Dimension getGoal(int[][] state){
@@ -77,19 +92,27 @@ public class ShipYard {
 		}
 		return goal;
 	}
-	public void printEndPath(ShipNode end){
-		ArrayList<ShipNode> path = new ArrayList<>();
+	public void setEndPath(ShipNode end){
+		path = new ArrayList<>();
 		path.add(0,end);
 		
 		while(end.getParent()!=null){
 			path.add(0,end.getParent());
 			end = end.getParent();
 		}
-		
+	}
+	public void printEndPath(ShipNode end){
+		setEndPath(end);
 		for(ShipNode s: path){
 			s.printState();
 			System.out.println();
 		}
+	}
+	public ArrayList<ShipNode> getPath() {
+		return path;
+	}
+	public void setPath(ArrayList<ShipNode> path) {
+		this.path = path;
 	}
 	public boolean checkVisited(ShipNode move){
 		for(ShipNode s: visitedNodes){
@@ -98,6 +121,19 @@ public class ShipYard {
 			}
 		}
 		return false;
+	}
+	public ShipNode getEnd() {
+		return end;
+	}
+	public void setEnd(ShipNode end) {
+		this.end = end;
+	}
+	public void getChangedBoats(ShipNode ship1, ShipNode ship2){
+		for(Boat b: ship1.getBoats()){
+			if(!ship2.getBoat(b.getId()).getArea().equals(b.getArea())){
+				boatsMoved.add(b);
+			}
+		}
 	}
 	public static void main(String args[]){
 		int[][] temp = {{6,6,3,3,3,7},
@@ -122,7 +158,22 @@ public class ShipYard {
 		ShipNode end = game.breadthFirstSearch();
 		//end = game.depthFirstSearch();
 		game.printEndPath(end);
+		for(Boat b: game.boatsMoved){
+			System.out.print(b.getId() + " ");
+		}
 
-
+	}
+	
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public ShipNode getStart() {
+		return start;
+	}
+	public void setStart(ShipNode start) {
+		this.start = start;
 	}
 }
