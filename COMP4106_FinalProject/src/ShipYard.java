@@ -46,7 +46,8 @@ public class ShipYard {
 			}
 			temp = q.remove();
 		}
-		end = temp;
+		
+		end = temp.finalPosition();
 		setEndPath(end);
 		boatsMoved = new ArrayList<Boat>();
 		boatsMoved.add(new Boat(100));

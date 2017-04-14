@@ -184,7 +184,14 @@ public class ShipNode {
 		}
 		return false;
 	}
-	
+	public ShipNode finalPosition(){
+		for(ShipNode s: getMoves()){
+			if(s.getState()[(int)goal.getWidth()][(int)goal.getHeight()] == 1){
+				return s;
+			}
+		}
+		return null;
+	}
 	public static void main(String args[]){
 
 
