@@ -49,6 +49,7 @@ public class ShipYard {
 		end = temp;
 		setEndPath(end);
 		boatsMoved = new ArrayList<Boat>();
+		boatsMoved.add(new Boat(100));
 		for(int i=0;i<path.size()-1;i++){
 			getChangedBoats(path.get(i),path.get(i+1));
 		}

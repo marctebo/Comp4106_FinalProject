@@ -68,10 +68,12 @@ public class ShipYardGUI extends JFrame {
         for(int i = 0; i < game.getSize(); i++){
         	for(int j = 0; j< game.getSize(); j++){
         		labels[count].setText("" + game.getPath().get(index).getState()[i][j]);
-        		if(index<game.getPath().size()-1){
+        		if(index<game.getPath().size()){
         			changedLabel.setText("Boat " + game.boatsMoved.get(index).getId() + " has moved");
         		}
-
+        		if(index==0){
+        			changedLabel.setText("Initial State");
+        		}
             	count++;
         	}
         }
@@ -84,7 +86,19 @@ public class ShipYardGUI extends JFrame {
 				{0,4,4,4,4,0},
 				{0,0,0,0,0,0},
 				{0,0,0,0,0,0}};
-		ShipYardGUI gui = new ShipYardGUI(new ShipYard(temp, new Dimension(2,5)));
+		int[][] temp2 ={{7, 6, 6, 0, 3, 0},
+				{7, 8, 9, 0, 3, 2},
+				{7, 8, 9, 1, 1, 2},
+				{5, 5, 5 ,4 ,0, 2},
+				{0, 0, 12,4,10,10},
+				{13,13,12,11,11,0}};
+		int[][] temp3 ={{11,11, 2, 0, 5, 5},
+				{10,10, 2, 0, 0, 4},
+				{9 , 1, 1, 0, 0, 4},
+				{9 , 7, 7, 7, 0, 4},
+				{9 , 0, 0, 3,12,12},
+				{8 , 8, 0, 3, 6, 6}};
+		ShipYardGUI gui = new ShipYardGUI(new ShipYard(temp3, new Dimension(2,5)));
 		
 	}
 	
