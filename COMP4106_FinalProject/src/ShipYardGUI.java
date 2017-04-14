@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -115,6 +116,9 @@ public class ShipYardGUI extends JFrame {
 				if(count<game.getPath().size()){
 					gui.updateGUI(count);
 					count++;
+				}
+				if(count == game.getPath().size()){
+					JOptionPane.showMessageDialog(gui, "Solution Reached");
 				}
 			}
 			if(e.getActionCommand().equals("Previous")){
