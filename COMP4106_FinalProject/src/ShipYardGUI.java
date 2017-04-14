@@ -73,13 +73,13 @@ public class ShipYardGUI extends JFrame {
         }
         for(int i=0;i<game.getSize();i++){
         	if(i ==2){
-        		JLabel j = new JLabel("GOAL",SwingConstants.CENTER);
+        		JLabel j = new JLabel(" GOAL ",SwingConstants.CENTER);
         		j.setOpaque(true);
-        		j.setBackground(colours[0]);
+        		j.setBackground(colours[1]);
         		panel4.add(j);
         	}
         	else{
-        		JLabel j = new JLabel("-",SwingConstants.CENTER);
+        		JLabel j = new JLabel("",SwingConstants.CENTER);
         		j.setOpaque(true);
         		j.setBackground(new Color(0,0,0));
         		panel4.add(j);
