@@ -86,7 +86,6 @@ public class ShipYardGUI extends JFrame {
         	}
         }
         window.setVisible(true);
-        System.out.println(game.getPath().size());
 	}
 	public void generateColours(){
 		colours = new Color[14];
