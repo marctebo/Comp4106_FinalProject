@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,8 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-
 
 public class ShipYardGUI extends JFrame {
 	
@@ -135,25 +135,80 @@ public class ShipYardGUI extends JFrame {
         
 	}
 	public static void main(String args[]){
-		int[][] temp = {{6,6,3,3,3,7},
-				{0,0,2,0,0,7},
-				{1,1,2,0,0,-1},
-				{0,4,4,4,4,0},
-				{0,0,0,0,0,0},
-				{0,0,0,0,0,0}};
-		int[][] temp2 ={{7, 6, 6, 0, 3, 0},
-				{7, 8, 9, 0, 3, 2},
-				{7, 8, 9, 1, 1, 2},
-				{5, 5, 5 ,4 ,0, 2},
-				{0, 0, 12,4,10,10},
-				{13,13,12,11,11,0}};
-		int[][] temp3 ={{11,11, 2, 0, 5, 5},
-				{10,10, 2, 0, 0, 4},
-				{9 , 1, 1, 0, 0, 4},
-				{9 , 7, 7, 7, 0, 4},
-				{9 , 0, 0, 3,12,12},
-				{8 , 8, 0, 3, 6, 6}};
-		ShipYardGUI gui = new ShipYardGUI(new ShipYard(temp2, new Dimension(2,5)));
+		ArrayList<int[][]> puzzles =  new ArrayList<int[][]>();
+		
+		int[][] temp1 ={{6,6,3,3,3,7},
+						{0,0,2,0,0,7},
+						{1,1,2,0,0,-1},
+						{0,4,4,4,4,0},
+						{0,0,0,0,0,0},
+						{0,0,0,0,0,0}};
+		puzzles.add(temp1);
+		
+		int[][] temp2 ={{3,0,0,4,0,0},
+						{3,0,0,4,0,0},
+						{3,1,1,4,0,-1},
+						{0,0,6,5,5,5},
+						{0,0,6,0,0,8},
+						{0,0,7,7,7,8}};
+		puzzles.add(temp2);
+		
+		int[][] temp3 ={{4,3,3,2,0,0},
+						{4,0,0,2,0,0},
+						{4,1,1,2,0,0},
+						{0,0,6,5,5,5},
+						{0,0,6,0,0,8},
+						{0,0,7,7,7,8}};
+		puzzles.add(temp3);
+		
+		int[][] temp4 ={{3,3,2,5,0,0},
+						{4,4,2,5,0,0},
+						{6,1,1,5,0,-1},
+						{6,9,9,9,0,0},
+						{6,7,7,0,0,0},
+						{8,8,8,0,0,0}};
+		puzzles.add(temp4);
+		
+		int[][] temp5 ={{0,0,2,3,3,3},
+						{5,0,2,4,7,7},
+						{5,1,1,4,0,-1},
+						{0,6,0,4,8,8},
+						{11,6,9,9,0,12},
+						{11,10,10,10,0,12}};
+		puzzles.add(temp5);
+		
+		int[][] temp6 = {{6,6,6,0,3,0},
+						{0,0,2,0,3,0},
+						{1,1,2,0,3,12},
+						{8,4,4,5,5,12},
+						{8,7,7,10,0,11},
+						{9,9,9,10,0,11}};
+		puzzles.add(temp6);
+		
+		int[][] temp7 ={{11,11, 2, 0, 5, 5},
+						{10,10, 2, 0, 0, 4},
+						{9 , 1, 1, 0, 0, 4},
+						{9 , 7, 7, 7, 0, 4},
+						{9 , 0, 0, 3,12,12},
+						{8 , 8, 0, 3, 6, 6}};
+		puzzles.add(temp7);
+		
+		int[][] temp8 ={{7, 6, 6, 0, 3, 0},
+						{7, 8, 9, 0, 3, 2},
+						{7, 8, 9, 1, 1, 2},
+						{5, 5, 5 ,4 ,0, 2},
+						{0, 0, 12,4,10,10},
+						{13,13,12,11,11,0}};
+		puzzles.add(temp8);
+		
+		Scanner scan = new Scanner(System.in);
+		int diff;
+		do {
+			System.out.println("Enter the difficulty of puzzle to be solved (1-8)");
+			diff = Integer.parseInt(scan.nextLine());
+		}
+		while(diff<1 || diff>8);
+		new ShipYardGUI(new ShipYard(puzzles.get(diff-1), new Dimension(2,5)));
 		
 	}
 	
