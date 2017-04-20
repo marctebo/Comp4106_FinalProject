@@ -227,7 +227,7 @@ public class ShipYardGUI extends JFrame {
 					count++;
 				}
 				if(count == game.getPath().size()){
-					JOptionPane.showMessageDialog(gui, "Solution Reached");
+					JOptionPane.showMessageDialog(gui, "Solution Reached\nMoves used: " + (count-1));
 				}
 			}
 			if(e.getActionCommand().equals("Previous")){
